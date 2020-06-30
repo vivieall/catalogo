@@ -3,7 +3,7 @@ $(function() {
 
   //------- Parallax -------//
   skrollr.init({
-    forceHeight: false
+    forceHeight: false,
   });
 
   //------- Active Nice Select --------//
@@ -79,7 +79,25 @@ $(function() {
 
     if (scroll >= 50) sticky.addClass('fixed');
     else sticky.removeClass('fixed');
+
+    var dragYStart;
+    var dragScrollStart;
+    $(window).one('mousedown',startDrag);
+
+    dragYStart = e.pageY;
+    dragScrollStart = $(window).scrollTop();
+    $(window).on('mousemove',drag);
+    $(window).one('mouseup',stopDrag);
+
+    $(window).off('mousemove',drag);
+    $(window).one('mousedown',startDrag);
+
+    var delta = dragYStart - e.pageY;
+    $(window).scrollTop(dragScrollStart + delta);
+
   });
+
+});
 
   //------- Price Range slider -------//
   if(document.getElementById("price-range")){
